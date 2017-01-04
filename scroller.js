@@ -5,7 +5,7 @@ var loadAllowed = true;
 var batch;
 
 var loadMore =  function(evt) {
-	if ((window.innerHeight + window.scrollY) > document.body.offsetHeight && loadAllowed) {
+	if ((window.innerHeight + window.scrollY) > document.body.scrollHeight - 400 && loadAllowed) {
 		loadAllowed = false;
 		console.log(counter);
 		requestShots();
