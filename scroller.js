@@ -2,26 +2,30 @@ var counter = 1;
 var per_page = 20;
 var loadAllowed = true;
 
+var batch;
+
 var loadMore =  function(evt) {
 	if ((window.innerHeight + window.scrollY) > document.body.offsetHeight && loadAllowed) {
 		loadAllowed = false;
 		console.log(counter);
-		loadSomething();		
+		requestShots();
 	}
 };
 
-loadSomething();
+requestShots();
 document.addEventListener("scroll", loadMore);
 
 
-function loadSomething () {	
+function requestShots() {	
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", "https://api.dribbble.com/v1/shots?page=" + counter + "&per_page=" + per_page, true);
 	xhr.setRequestHeader("Authorization", "Bearer " + token);
 	counter++;
 
 	xhr.onload = function (e) {
-		addShots(xhr)
+		if (xhr.readyState === 4 && xhr.status === 200) {
+			addShots(xhr.responseText)
+		}
 	};
 
 	xhr.onerror = function (e) {
@@ -32,16 +36,20 @@ function loadSomething () {
 
 }
 
-function addShots (xhr) {	
-	if (xhr.readyState === 4) {
-		if (xhr.status === 200) {
-		var obj = JSON.parse(xhr.responseText);
+function addShots (responseText) {
+	var obj = JSON.parse(responseText);
+	var i = 0;
 
-			for (var i = 0; i < Object.keys(obj).length; i++) {
-				var image = obj[i].images.normal;
-				document.getElementById("scroll").innerHTML = document.getElementById("scroll").innerHTML + '<img id="img_one" src="' + image + '">';
-			}
+	console.log(obj);
+
+	while (i < Object.keys(obj).length) {
+		if (obj[i].animated == true || window.screen.width >= 1600) {
+			var image = obj[i].images.hidpi;
+		} else {
+			var image = obj[i].images.normal;
 		}
+		document.getElementById("scroll").innerHTML = document.getElementById("scroll").innerHTML + '<div class="image"><img class="blur" src="' + image + '"> <h2><span>'+ obj[i].title +'<br />'+ obj[i].user.name +'</span></h2></div>';
+		i++;
 	}
 	loadAllowed = true;
 }
