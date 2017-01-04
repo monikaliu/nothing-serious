@@ -1,0 +1,56 @@
+body {
+    background-color: lightgrey;
+}
+
+div #scroll {
+	position: absolute;
+	margin: auto;
+}
+
+div.image {
+	position: relative;
+	width: 31%;
+	margin: 1%;
+	float: left;
+}
+
+img.blur {
+	width: 100%;
+	border-radius: 2%;
+
+	-webkit-transition: all 0.2s ease;
+	-moz-transition: all 0.2s ease;
+	-o-transition: all 0.2s ease;
+	-ms-transition: all 0.2s ease;
+	transition: all 0.2s ease;
+}
+
+.image:hover .blur { 
+	-webkit-filter: brightness(75%) blur(3px);
+	filter: brightness(75%) blur(3px);
+}
+
+.image:hover > h2 span{ 
+	-webkit-transition: all 0.2s ease;
+	-moz-transition: all 0.2s ease;
+	-o-transition: all 0.2s ease;
+	-ms-transition: all 0.2s ease;
+	transition: all 0.2s ease;
+	visibility: visible;
+}
+
+h2 { 
+	position: absolute; 
+	top: 40%; 
+	left: 25%; 
+	width: 50%;
+	text-align: center;
+}
+
+h2 span { 
+	color: white; 
+	font: 24px/45px Verdana, Geneva, sans-serif;
+	letter-spacing: -1px;
+	visibility: hidden;
+}
+
