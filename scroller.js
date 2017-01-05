@@ -1,5 +1,6 @@
 var counter = 1;
 var per_page = 20;
+var loadAllowed = true;
 var shots = [];
 
 document.addEventListener("getShots", requestShots);
@@ -8,6 +9,7 @@ document.addEventListener("scroll", loadShots);
 document.dispatchEvent(new Event('getShots'));
 
 function requestShots() {	
+	loadAllowed = false;
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", "https://api.dribbble.com/v1/shots?page=" + counter + "&per_page=" + per_page, true);
 	xhr.setRequestHeader("Authorization", "Bearer " + token);
@@ -16,7 +18,9 @@ function requestShots() {
 	xhr.onload = function (e) {
 		if (xhr.readyState === 4 && xhr.status === 200) {
 			shots = JSON.parse(xhr.responseText);
+			
 			document.dispatchEvent(new Event('scroll'));
+			loadAllowed = true;
 		}
 	};
 
@@ -29,12 +33,12 @@ function requestShots() {
 
 function loadShots() {
 	if ((window.innerHeight + window.scrollY) > document.body.scrollHeight - 400) {
-		if (Object.keys(shots).length > 0 ) {
+		if (Object.keys(shots).length > 0) {
 			loadShot(shots[0]);		
 			document.dispatchEvent(new Event('scroll'));
-		} else {
-			document.dispatchEvent(new Event('getShots'));
-		}	
+		} else if (loadAllowed) {
+			requestShots();
+		}
 	}
 }
 
