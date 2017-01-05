@@ -32,7 +32,7 @@ function requestShots() {
 		console.error(xhr.statusText);
 	};
 
-	xhr.send(null);
+	xhr.send();
 
 }
 
@@ -40,15 +40,20 @@ function addShots (responseText) {
 	var obj = JSON.parse(responseText);
 	var i = 0;
 
-	console.log(obj);
-
 	while (i < Object.keys(obj).length) {
 		if (obj[i].animated == true || window.screen.width >= 1600) {
 			var image = obj[i].images.hidpi;
 		} else {
 			var image = obj[i].images.normal;
 		}
-		document.getElementById("scroll").innerHTML = document.getElementById("scroll").innerHTML + '<div class="image"><img class="blur" src="' + image + '"> <h2><span>'+ obj[i].title +'<br />'+ obj[i].user.name +'</span></h2></div>';
+		document.getElementById("scroll").innerHTML = document.getElementById("scroll").innerHTML 
+			+ '<div class="image">'
+				+ '<img class="blur" src="' + image + '">' 
+				+ '<h2>' 
+					+ '<div class="text shot_title">'+ obj[i].title +'</div>' 
+					+ '<div class="text shot_author"><div class="line"></div><div>' + obj[i].user.name +' </div></div>' 
+				+ '</h2>' 
+			+ '</div>';
 		i++;
 	}
 	loadAllowed = true;
