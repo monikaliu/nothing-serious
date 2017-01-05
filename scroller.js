@@ -1,22 +1,11 @@
 var counter = 1;
 var per_page = 20;
-var loadAllowed = true;
-
 var shots = [];
 
-var loadMore =  function(evt) {
-	if ((window.innerHeight + window.scrollY) > document.body.scrollHeight - 200 && loadAllowed) {
-		loadAllowed = false;
-		addShots();
-		if ((window.innerHeight + window.scrollY) > document.body.scrollHeight - 200) {
-			requestShots();
-		}
-		loadAllowed = true;
-	}
-};
+document.addEventListener("getShots", requestShots);
+document.addEventListener("scroll", loadShots);
 
-requestShots();
-document.addEventListener("scroll", loadMore);
+document.dispatchEvent(new Event('getShots'));
 
 function requestShots() {	
 	var xhr = new XMLHttpRequest();
@@ -27,7 +16,7 @@ function requestShots() {
 	xhr.onload = function (e) {
 		if (xhr.readyState === 4 && xhr.status === 200) {
 			shots = JSON.parse(xhr.responseText);
-			addShots();
+			document.dispatchEvent(new Event('scroll'));
 		}
 	};
 
@@ -36,21 +25,20 @@ function requestShots() {
 	};
 
 	xhr.send();
-
 }
 
-function addShots () {
-	var i = 0;
-	while (i < Object.keys(shots).length && (window.innerHeight + window.scrollY) > document.body.scrollHeight - 200) {
-		addShot(shots[i]);
-		console.log((window.innerHeight + window.scrollY) > document.body.scrollHeight - 200);
-		i++;
+function loadShots() {
+	if ((window.innerHeight + window.scrollY) > document.body.scrollHeight - 400) {
+		if (Object.keys(shots).length > 0 ) {
+			loadShot(shots[0]);		
+			document.dispatchEvent(new Event('scroll'));
+		} else {
+			document.dispatchEvent(new Event('getShots'));
+		}	
 	}
-	console.log(i);
-	shots.splice(0, i);	
 }
 
-function addShot(shot) {
+function loadShot(shot) {
 	if ((shot.animated == true || window.screen.width >= 1600) && shot.images.hidpi != null) {
 		var image = shot.images.hidpi;
 	} else {
@@ -63,7 +51,8 @@ function addShot(shot) {
 				+ '<div class="text shot_title">'+ shot.title +'</div>' 
 				+ '<div class="text shot_author"><div class="line"></div><div>' + shot.user.name +'</div></div>' 
 			+ '</h2>' 
-		+ '</div>';
-}
+		+ '</div>';		
 
+	shots.splice(0, 1);		
+}
 
