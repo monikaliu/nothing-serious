@@ -1,12 +1,12 @@
 var counter = 1;
-var per_page = 20;
+var per_page = 15;
 var loadAllowed = true;
 var shots = [];
 
 document.addEventListener("getShots", requestShots);
 document.addEventListener("scroll", loadShots);
 
-document.dispatchEvent(new Event('getShots'));
+requestShots();
 
 function requestShots() {	
 	loadAllowed = false;
@@ -17,8 +17,7 @@ function requestShots() {
 
 	xhr.onload = function (e) {
 		if (xhr.readyState === 4 && xhr.status === 200) {
-			shots = JSON.parse(xhr.responseText);
-			
+			shots = shots.concat(JSON.parse(xhr.responseText));
 			document.dispatchEvent(new Event('scroll'));
 			loadAllowed = true;
 		}
@@ -33,8 +32,8 @@ function requestShots() {
 
 function loadShots() {
 	if ((window.innerHeight + window.scrollY) > document.body.scrollHeight - 400) {
-		if (Object.keys(shots).length > 0) {
-			loadShot(shots[0]);		
+		if (shots.length > 0) {
+			loadShot(shots[0]);
 			document.dispatchEvent(new Event('scroll'));
 		} else if (loadAllowed) {
 			requestShots();
@@ -47,16 +46,23 @@ function loadShot(shot) {
 		var image = shot.images.hidpi;
 	} else {
 		var image = shot.images.normal;
-	}
+	}	
+	
 	document.getElementById("scroll").innerHTML = document.getElementById("scroll").innerHTML 
 		+ '<div class="image">'
 			+ '<img class="blur" src="' + image + '">' 
-			+ '<h2>' 
+			+ '<h2 class="info">' 
 				+ '<div class="text shot_title">'+ shot.title +'</div>' 
 				+ '<div class="text shot_author"><div class="line"></div><div>' + shot.user.name +'</div></div>' 
+				
 			+ '</h2>' 
+			+ '<div class="btn_wrapper info"><button onclick="activateFavourite(this)" class="fav_button">Favourite</button></div>'
 		+ '</div>';		
 
 	shots.splice(0, 1);		
+}
+
+function activateFavourite(btn) {
+	btn.className += " fav_clicked";
 }
 
