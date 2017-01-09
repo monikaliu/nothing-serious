@@ -6,7 +6,6 @@ var loadAllowed = true;
 document.addEventListener("scroll", loadShots);
 
 requestShots();
-loadShots();
 
 function requestShots() {
 	loadAllowed = false;
@@ -31,13 +30,16 @@ function requestShots() {
 }
 
 function loadShots() {
-	if ((window.innerHeight + window.scrollY) > document.body.scrollHeight - 400 || first) {
+	if ((window.innerHeight + window.scrollY) > document.body.scrollHeight - 600 || first) {
 		first = false;
 		if (document.getElementsByClassName("is_hidden").length > 0) {
 			var element = document.getElementsByClassName("is_hidden")[0];
 			var element_position = element.offsetTop;
 			if (document.body.scrollTop > element_position - window.innerHeight) {
 				loadShot(element);
+			}
+			if (document.getElementsByClassName("is_hidden").length < 7 && loadAllowed) {
+				requestShots();
 			}
 		} else if (loadAllowed) {
 			requestShots();
@@ -61,8 +63,6 @@ function addShots(shots) {
 		addShot(shots[0]);
 		shots.splice(0, 1);
 	}
-
-	//loadShots();
 }
 
 function addShot(shot) {
@@ -74,12 +74,10 @@ function addShot(shot) {
 	
 	document.getElementById("scroll").innerHTML = document.getElementById("scroll").innerHTML 
 		+ '<div class="image is_hidden">'
-			//+ '<img class="blur" src="' + image + '">'
 			+ '<img class="blur" src="' + '" data_src=' + image + '>' 
 			+ '<h2 class="info">' 
 				+ '<div class="text shot_title">'+ shot.title +'</div>' 
-				+ '<div class="text shot_author"><div class="line"></div><div>' + shot.user.name +'</div></div>' 
-				
+				+ '<div class="text shot_author"><div class="line"></div><div>' + shot.user.name +'</div></div>'
 			+ '</h2>' 
 			+ '<div class="btn_wrapper info"><button onclick="activateFavourite(this)" class="fav_button fav_unclicked">Favourite</button></div>'
 		+ '</div>';
