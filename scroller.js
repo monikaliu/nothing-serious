@@ -18,6 +18,7 @@ function requestShots() {
 	xhr.onload = function (e) {
 		if (xhr.readyState === 4 && xhr.status === 200) {			
 			addShots(JSON.parse(xhr.responseText));
+			loadShots();
 			loadAllowed = true;
 		}
 	};
@@ -61,7 +62,7 @@ function addShots(shots) {
 		shots.splice(0, 1);
 	}
 
-	loadShots();
+	//loadShots();
 }
 
 function addShot(shot) {
