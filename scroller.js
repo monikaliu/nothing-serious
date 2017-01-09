@@ -1,14 +1,15 @@
 var counter = 1;
 var per_page = 15;
 var first = true;
+var loadAllowed = true;
 
 document.addEventListener("scroll", loadShots);
 
 requestShots();
 loadShots();
 
-function requestShots() {	
-	//loadAllowed = false;
+function requestShots() {
+	loadAllowed = false;
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", "https://api.dribbble.com/v1/shots?page=" + counter + "&per_page=" + per_page, true);
 	xhr.setRequestHeader("Authorization", "Bearer " + token);
@@ -17,6 +18,7 @@ function requestShots() {
 	xhr.onload = function (e) {
 		if (xhr.readyState === 4 && xhr.status === 200) {			
 			addShots(JSON.parse(xhr.responseText));
+			loadAllowed = true;
 		}
 	};
 
@@ -36,7 +38,7 @@ function loadShots() {
 			if (document.body.scrollTop > element_position - window.innerHeight) {
 				loadShot(element);
 			}
-		} else {
+		} else if (loadAllowed) {
 			requestShots();
 		}
 	}
