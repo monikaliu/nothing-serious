@@ -12,6 +12,15 @@ div.image {
 	width: 31.5%;
 	margin: 0.7%;
 	float: left;
+	
+}
+
+.is_hidden {
+	visibility: hidden;
+}
+
+.is_visible {
+	visibility: visible;
 }
 
 img.blur {
@@ -93,7 +102,7 @@ h2.info {
 	font-size: 1.3em;
 	border-radius: 40px;
 	text-align: center;
-	border: 1px solid rgba(255, 255, 255, 0.54);
+	
 	letter-spacing: 0;
 	cursor: pointer;
 }
@@ -104,6 +113,10 @@ h2.info {
 
 .fav_clicked {
 	border: 3px solid green;
+}
+
+.fav_unclicked {
+	border: 1px solid rgba(255, 255, 255, 0.54);
 }
 
 
