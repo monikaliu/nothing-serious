@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
 	background-color: lightgrey;
 }
@@ -11,7 +15,7 @@ div.image {
 	position: relative;
 	width: 31.5%;
 	margin: 0.7%;
-	float: left;	
+	float: left;
 }
 
 .is_hidden {
@@ -54,16 +58,19 @@ img.blur {
 
 h2.info {
 	position: absolute;
+	line-height: 10%;
 	top: 35%; 
 	left: 15%; 
 	width: 70%;
 	text-align: center;
 	opacity:0;
+	margin: 0;
 }
 
 .text { 
+	font-size: 100%;
 	color: white; 
-	font-family: 'Open Sans', 'Arial', sans-serif;
+	font-family: Verdana, Geneva, sans-serif;
 	line-height: 2em;
 }
 
@@ -92,9 +99,9 @@ h2.info {
 	display: block;
 	opacity: 0;
 	top: 80%;
-    left: 38%;
-    width: 25%;
-    height: 12%;
+	left: 38%;
+	width: 25%;
+	height: 12%;
 }
 
 .fav_button {
@@ -106,9 +113,9 @@ h2.info {
 	font-size: 1.3em;
 	border-radius: 40px;
 	text-align: center;
-	
 	letter-spacing: 0;
 	cursor: pointer;
+	outline: 0;
 }
 
 .fav_button:focus {
@@ -121,6 +128,45 @@ h2.info {
 
 .fav_unclicked {
 	border: 1px solid rgba(255, 255, 255, 0.54);
+}
+
+@media (max-width: 1199px) {
+	div.image { 
+		width: 47%; 
+	}
+
+	.btn_wrapper {
+		top: 80%;
+		left: 35%;
+		width: 30%;
+		height: 12%;
+	}
+}
+
+@media (max-width: 762px) {
+	div.image { 
+		width: 96%; 
+	}
+
+	.shot_title {
+		font-size: 6vw;
+	}
+
+	.shot_author {
+		font-size: 5vw;
+	}
+
+	.fav_button {
+		font-size: 5vw;
+		display: block;
+	}
+
+	.btn_wrapper {
+		top: 75%;
+		left: 30%;
+		width: 40%;
+		height: 18%;
+	}
 }
 
 
