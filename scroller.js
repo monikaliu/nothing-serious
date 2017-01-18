@@ -10,7 +10,7 @@ function requestShots() {
 	loadAllowed = false;
 	counter++;
 	var xhr = new XMLHttpRequest();
-	xhr.open("GET", "https://api.dribbble.com/v1/shots?page=" + counter + "&per_page=" + per_page, true);
+	xhr.open("GET", `https://api.dribbble.com/v1/shots?page=${counter}&per_page=${per_page}`, true);
 	xhr.setRequestHeader("Authorization", "Bearer " + token);
 
 	xhr.onload = function (e) {
@@ -29,25 +29,26 @@ function requestShots() {
 }
 
 function loadShots() {
-	if (document.getElementsByClassName("is_hidden").length > 0) {
-		var element = document.getElementsByClassName("is_hidden")[0];
+	if (document.getElementsByClassName("image_hidden").length > 0) {
+		var element = document.getElementsByClassName("image_hidden")[0];
 		var element_position = element.offsetTop;		
 		if (document.body.scrollTop + document.documentElement.scrollTop > element_position - window.innerHeight - 600) {
 			loadShot(element);
+			
 		}
 	}
 
-	if (document.getElementsByClassName("is_hidden").length < 7 && loadAllowed) {
+	if (document.getElementsByClassName("image_hidden").length < 7 && loadAllowed) {
 		requestShots();
 	}
 }
 
 function loadShot(el) {
-	var original = el.getElementsByClassName("blur")[0];
+	var original = el.getElementsByClassName("js-load-img")[0];
 	var img = new Image();
 	img.onload = function () {
 		original.src = original.dataset.src;
-		el.className = el.className.replace('is_hidden','is_visible');
+		el.className = el.className.replace('image_hidden','image_visible');
 		loadShots();
 	}
 	img.src = original.dataset.src;
@@ -61,28 +62,29 @@ function addShots(shots) {
 }
 
 function addShot(shot) {
-	if ((shot.animated == true || window.screen.width >= 1600) && shot.images.hidpi != null) {
-		var image = shot.images.hidpi;
+	var image;
+	if ((shot.animated === true || window.screen.width >= 1600) && shot.images.hidpi != null) {
+		image = shot.images.hidpi;
 	} else {
-		var image = shot.images.normal;
+		image = shot.images.normal;
 	}	
 	
-	document.getElementById("scroll").innerHTML = document.getElementById("scroll").innerHTML 
-		+ '<div class="image is_hidden">'
-			+ '<img class="blur" src="" data-src="' + image + '"">' 
-			+ '<h2 class="info">' 
-				+ '<div class="text shot_title">'+ shot.title +'</div>' 
-				+ '<div class="text shot_author"><div class="line"></div><div>' + shot.user.name +'</div></div>'
-			+ '</h2>' 
-			+ '<div class="btn_wrapper info"><button onclick="activateFavourite(this)" class="fav_button fav_unclicked">Favourite</button></div>'
-		+ '</div>';
+	document.getElementsByClassName("scroll")[0].innerHTML = document.getElementsByClassName("scroll")[0].innerHTML 
+		+ `<div class="image image_hidden">
+			<img class="js-load-img image_blur" src="" data-src="${image}">
+			<h2 class="image_info image_info_header">
+				<div class="image_info_text image_info_title">${shot.title}</div>
+				<div class="image_info_text image_info_author"><div class="line"></div><div>${shot.user.name}</div></div>
+			</h2>
+			<div class="button_wrapper image_info"><button onclick="activateFavourite(this)" class="button_favourite button_unclicked">Favourite</button></div>
+		</div>`;
 }
 
 function activateFavourite(btn) {
-	if ((btn.className).indexOf("fav_clicked") > -1) {
-		btn.className = btn.className.replace('fav_clicked','fav_unclicked');
+	if ((btn.className).indexOf("button_clicked") > -1) {
+		btn.className = btn.className.replace('button_clicked','button_unclicked');
 	} else {
-		btn.className = btn.className.replace('fav_unclicked','fav_clicked');
+		btn.className = btn.className.replace('button_unclicked','button_clicked');
 	}
 }
 

@@ -1,20 +1,22 @@
 {
-  "name": "nothing-serious",
-  "version": "0.0.1",
-  "private": "true",
-  "author": "monika liu",
-  "scripts": {
-  	"copyfiles": "cp access_token.js ./compressed/ && cp favicon.ico ./compressed/ ",
-  	"buildhtml": "html-minifier --remove-style-link-type-attributes --collapse-whitespace index.html -o ./compressed/index.html",
-  	"buildcss": "uglifycss --max-line-len 200 --expand-vars style.css > ./compressed/style.css",
-  	"buildjs": "uglifyjs scroller.js --compress -o ./compressed/scroller.js",
-  	"build": "npm run buildhtml && npm run buildcss && npm run buildjs",
-  	"start": "http-server compressed -o"
-  },
-  "devDependencies": {
-  	"http-server": "^0.9.0",
-    "uglifyjs": "^2.7.5",
-    "uglifycss": "^0.0.25",
-    "html-minifier": "^3.2.3"
-  }
+	"name": "nothing-serious",
+	"version": "0.0.1",
+	"private": "true",
+	"author": "monika liu",
+	"scripts": {
+		"copyfiles": "copy access_token.js compressed && copy favicon.ico compressed && copy scroller.js compressed",
+		"buildhtml": "html-minifier --remove-style-link-type-attributes --collapse-whitespace index.html -o ./compressed/index.html",
+		"buildcss": "node-sass --output-style compressed style.scss compressed/style.css",
+		"buildjs": "uglifyjs scroller.js --compress -o ./compressed/scroller.js",
+		"build": "npm run buildhtml && npm run buildcss && npm run copyfiles",
+		"start": "http-server compressed -o"
+	},
+	"devDependencies": {
+		"http-server": "^0.9.0",
+		"node-sass": "^3.4.2",
+		"copy": "^0.3.0",
+		"uglifyjs": "^2.7.5",
+		"uglifycss": "^0.0.25",
+		"html-minifier": "^3.2.3"
+	}
 }
