@@ -1,15 +1,28 @@
-$font-stack:  Verdana, Geneva, sans-serif;
+$font-stack: Verdana, Geneva, sans-serif;
 
 @mixin transition($time) {
-    -webkit-transition: all $time ease;
+	-webkit-transition: all $time ease;
 	-moz-transition: all $time ease;
 	-o-transition: all $time ease;
 	-ms-transition: all $time ease;
 	transition: all $time ease;
 }
 
+@mixin respond-to($type) {
+  @if $type == phones {
+    @media (max-width: 762px) {
+        @content;
+      }
+  }
+  @else if $type == desktops {
+    @media  (min-width: 763px) and (max-width: 1199px) {
+        @content;
+      }
+  }
+ }
+
 * {
-    box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 body {
@@ -26,6 +39,14 @@ body {
 	width: 31.5%;
 	margin: 0.7%;
 	float: left;
+
+	@include respond-to(phones) {
+		width: 96%; 
+	}
+
+	@include respond-to(desktops) {
+		width: 47%;
+	}
 }
 
 .image_hidden {
@@ -78,6 +99,10 @@ body {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+
+	@include respond-to(phones) {
+		font-size: 6vw;
+	}
 }
 
 .image_info_author {
@@ -85,6 +110,10 @@ body {
 	font-size: 0.8em;
 	display: inline-block;
 	font-style: italic;
+
+	@include respond-to(phones) {
+		font-size: 5vw;
+	}
 }
 
 .line {
@@ -100,6 +129,20 @@ body {
 	left: 38%;
 	width: 25%;
 	height: 12%;
+
+	@include respond-to(phones) {
+		top: 75%;
+		left: 30%;
+		width: 40%;
+		height: 18%;
+	}
+
+	@include respond-to(desktops) {
+		top: 80%;
+		left: 35%;
+		width: 30%;
+		height: 12%;
+	}
 }
 
 .button_favourite {
@@ -114,6 +157,11 @@ body {
 	letter-spacing: 0;
 	cursor: pointer;
 	outline: 0;
+
+	@include respond-to(phones) {
+		font-size: 5vw;
+		display: block;
+	}
 }
 
 .button_favourite:focus {
@@ -127,44 +175,4 @@ body {
 .button_unclicked {
 	border: 1px solid rgba(255, 255, 255, 0.54);
 }
-
-@media (max-width: 1199px) {
-	.image { 
-		width: 47%; 
-	}
-
-	.button_wrapper {
-		top: 80%;
-		left: 35%;
-		width: 30%;
-		height: 12%;
-	}
-}
-
-@media (max-width: 762px) {
-	.image { 
-		width: 96%; 
-	}
-
-	.image_info_title {
-		font-size: 6vw;
-	}
-
-	.image_info_author {
-		font-size: 5vw;
-	}
-
-	.button_favourite {
-		font-size: 5vw;
-		display: block;
-	}
-
-	.button_wrapper {
-		top: 75%;
-		left: 30%;
-		width: 40%;
-		height: 18%;
-	}
-}
-
 

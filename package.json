@@ -1,24 +1,23 @@
 {
-	"name": "nothing-serious",
-	"version": "0.0.1",
-	"private": "true",
-	"author": "monika liu",
-	"scripts": {
-		"copyfiles": "copy access_token.js dist && copy favicon.ico dist && copy scroller.js dist",
-		"buildhtml": "html-minifier --remove-style-link-type-attributes --collapse-whitespace index.html -o ./dist/index.html",
-		"buildcss": "node-sass --output-style dist style.scss dist/style.css",
-		"buildjs": "uglifyjs scroller.js --compress -o ./dist/scroller.js",
-		"build": "npm run buildhtml && npm run buildcss && npm run copyfiles",
-		"start": "http-server dist -o",
-		"deploy": "gh-pages -d dist"
-	},
-	"devDependencies": {
-		"http-server": "^0.9.0",
-		"gh-pages": "^0.12.0",
-		"node-sass": "^3.4.2",
-		"copy": "^0.3.0",
-		"uglifyjs": "^2.7.5",
-		"uglifycss": "^0.0.25",
-		"html-minifier": "^3.2.3"
-	}
+  "name": "nothing-serious",
+  "version": "0.0.1",
+  "private": "true",
+  "author": "monika liu",
+  "scripts": {
+    "copyfiles": "copy access_token.js dist && copy favicon.ico dist && copy scroller.js dist",
+    "buildhtml": "html-minifier --remove-style-link-type-attributes --collapse-whitespace index.html -o ./dist/index.html",
+    "buildcss": "node-sass --output-style dist style.scss dist/style.css",
+    "buildjs": "uglifyjs scroller.js --compress -o ./dist/scroller.js",
+    "build": "npm run buildhtml && npm run buildcss && npm run copyfiles",
+    "start": "http-server dist -o",
+    "deploy": "gh-pages -d dist"
+  },
+  "devDependencies": {
+    "copy": "^0.3.0",
+    "gh-pages": "^0.12.0",
+    "html-minifier": "^3.2.3",
+    "http-server": "^0.9.0",
+    "node-sass": "^3.4.2",
+    "uglifyjs": "^2.7.5"
+  }
 }
