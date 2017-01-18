@@ -1,62 +1,60 @@
+$font-stack:  Verdana, Geneva, sans-serif;
+
+@mixin transition($time) {
+    -webkit-transition: all $time ease;
+	-moz-transition: all $time ease;
+	-o-transition: all $time ease;
+	-ms-transition: all $time ease;
+	transition: all $time ease;
+}
+
 * {
     box-sizing: border-box;
 }
 
 body {
-	background-color: lightgrey;
+	background-color: #e3e4e5;
 }
 
-div#scroll {
+.scroll {
 	position: absolute;
 	margin: auto;
 }
 
-div.image {
+.image {
 	position: relative;
 	width: 31.5%;
 	margin: 0.7%;
 	float: left;
 }
 
-.is_hidden {
+.image_hidden {
 	opacity: 0;
 }
 
-.is_visible {
-	-webkit-transition: all 0.4s ease;
-	-moz-transition: all 0.4s ease;
-	-o-transition: all 0.4s ease;
-	-ms-transition: all 0.4s ease;
-	transition: opacity 0.4s ease;
+.image_visible {
+	@include transition(0.4s);
 	opacity: 1;
 }
 
-img.blur {
+.image_blur {
 	width: 100%;
 	border-radius: 1%;
-	-webkit-transition: all 0.4s linear;
-	-moz-transition: all 0.4s linear;
-	-o-transition: all 0.4s linear;
-	-ms-transition: all 0.4s linear;
-	transition: all 0.4s linear;
+	@include transition(0.4s);
 }
 
-.image:hover .blur {
+.image:hover .image_blur {
 	-webkit-filter: brightness(85%) blur(2px);
 	filter: brightness(85%) blur(2px);
 	overflow: hidden;
 }
 
-.image:hover .info { 
+.image:hover .image_info { 
 	opacity:1;
-	-webkit-transition: all 0.5s ease;
-	-moz-transition: all 0.5s ease;
-	-o-transition: all 0.5s ease;
-	-ms-transition: all 0.5s ease;
-	transition: opacity 0.5s ease;
+	@include transition(0.5s);
 }
 
-h2.info {
+.image_info_header {
 	position: absolute;
 	line-height: 10%;
 	top: 35%; 
@@ -67,14 +65,14 @@ h2.info {
 	margin: 0;
 }
 
-.text { 
+.image_info_text { 
 	font-size: 100%;
 	color: white; 
-	font-family: Verdana, Geneva, sans-serif;
+	font-family: $font-stack;
 	line-height: 2em;
 }
 
-.shot_title {
+.image_info_title {
 	font-weight: bold;
 	font-size: 1em;
 	white-space: nowrap;
@@ -82,7 +80,7 @@ h2.info {
 	text-overflow: ellipsis;
 }
 
-.shot_author {
+.image_info_author {
 	font-weight: 200;
 	font-size: 0.8em;
 	display: inline-block;
@@ -94,7 +92,7 @@ h2.info {
 	height: 2px;
 }
 
-.btn_wrapper {
+.button_wrapper {
 	position: absolute;
 	display: block;
 	opacity: 0;
@@ -104,8 +102,8 @@ h2.info {
 	height: 12%;
 }
 
-.fav_button {
-	color: white;
+.button_favourite {
+	color: #ffffff;
 	width: 100%;
 	height: 100%;
 	background: rgba(255, 255, 255, 0);
@@ -118,24 +116,24 @@ h2.info {
 	outline: 0;
 }
 
-.fav_button:focus {
+.button_favourite:focus {
 	outline: 0;	
 }
 
-.fav_clicked {
-	border: 3px solid green;
+.button_clicked {
+	border: 3px solid #4da00a;
 }
 
-.fav_unclicked {
+.button_unclicked {
 	border: 1px solid rgba(255, 255, 255, 0.54);
 }
 
 @media (max-width: 1199px) {
-	div.image { 
+	.image { 
 		width: 47%; 
 	}
 
-	.btn_wrapper {
+	.button_wrapper {
 		top: 80%;
 		left: 35%;
 		width: 30%;
@@ -144,24 +142,24 @@ h2.info {
 }
 
 @media (max-width: 762px) {
-	div.image { 
+	.image { 
 		width: 96%; 
 	}
 
-	.shot_title {
+	.image_info_title {
 		font-size: 6vw;
 	}
 
-	.shot_author {
+	.image_info_author {
 		font-size: 5vw;
 	}
 
-	.fav_button {
+	.button_favourite {
 		font-size: 5vw;
 		display: block;
 	}
 
-	.btn_wrapper {
+	.button_wrapper {
 		top: 75%;
 		left: 30%;
 		width: 40%;
