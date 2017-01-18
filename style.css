@@ -13,6 +13,12 @@ body {
   width: 31.5%;
   margin: 0.7%;
   float: left; }
+  @media (max-width: 762px) {
+    .image {
+      width: 96%; } }
+  @media (min-width: 763px) and (max-width: 1199px) {
+    .image {
+      width: 47%; } }
 
 .image_hidden {
   opacity: 0; }
@@ -69,12 +75,18 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis; }
+  @media (max-width: 762px) {
+    .image_info_title {
+      font-size: 6vw; } }
 
 .image_info_author {
   font-weight: 200;
   font-size: 0.8em;
   display: inline-block;
   font-style: italic; }
+  @media (max-width: 762px) {
+    .image_info_author {
+      font-size: 5vw; } }
 
 .line {
   background-color: white;
@@ -88,6 +100,18 @@ body {
   left: 38%;
   width: 25%;
   height: 12%; }
+  @media (max-width: 762px) {
+    .button_wrapper {
+      top: 75%;
+      left: 30%;
+      width: 40%;
+      height: 18%; } }
+  @media (min-width: 763px) and (max-width: 1199px) {
+    .button_wrapper {
+      top: 80%;
+      left: 35%;
+      width: 30%;
+      height: 12%; } }
 
 .button_favourite {
   color: #ffffff;
@@ -101,6 +125,10 @@ body {
   letter-spacing: 0;
   cursor: pointer;
   outline: 0; }
+  @media (max-width: 762px) {
+    .button_favourite {
+      font-size: 5vw;
+      display: block; } }
 
 .button_favourite:focus {
   outline: 0; }
@@ -110,28 +138,3 @@ body {
 
 .button_unclicked {
   border: 1px solid rgba(255, 255, 255, 0.54); }
-
-@media (max-width: 1199px) {
-  .image {
-    width: 47%; }
-  .button_wrapper {
-    top: 80%;
-    left: 35%;
-    width: 30%;
-    height: 12%; } }
-
-@media (max-width: 762px) {
-  .image {
-    width: 96%; }
-  .image_info_title {
-    font-size: 6vw; }
-  .image_info_author {
-    font-size: 5vw; }
-  .button_favourite {
-    font-size: 5vw;
-    display: block; }
-  .button_wrapper {
-    top: 75%;
-    left: 30%;
-    width: 40%;
-    height: 18%; } }
