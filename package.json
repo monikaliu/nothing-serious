@@ -4,15 +4,17 @@
 	"private": "true",
 	"author": "monika liu",
 	"scripts": {
-		"copyfiles": "copy access_token.js compressed && copy favicon.ico compressed && copy scroller.js compressed",
-		"buildhtml": "html-minifier --remove-style-link-type-attributes --collapse-whitespace index.html -o ./compressed/index.html",
-		"buildcss": "node-sass --output-style compressed style.scss compressed/style.css",
-		"buildjs": "uglifyjs scroller.js --compress -o ./compressed/scroller.js",
+		"copyfiles": "copy access_token.js dist && copy favicon.ico dist && copy scroller.js dist",
+		"buildhtml": "html-minifier --remove-style-link-type-attributes --collapse-whitespace index.html -o ./dist/index.html",
+		"buildcss": "node-sass --output-style dist style.scss dist/style.css",
+		"buildjs": "uglifyjs scroller.js --compress -o ./dist/scroller.js",
 		"build": "npm run buildhtml && npm run buildcss && npm run copyfiles",
-		"start": "http-server compressed -o"
+		"start": "http-server dist -o",
+		"deploy": "gh-pages -d dist"
 	},
 	"devDependencies": {
 		"http-server": "^0.9.0",
+		"gh-pages": "^0.12.0",
 		"node-sass": "^3.4.2",
 		"copy": "^0.3.0",
 		"uglifyjs": "^2.7.5",
