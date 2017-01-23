@@ -1,10 +1,43 @@
 var counter = 0;
 var per_page = 15;
 var loadAllowed = true;
+var firstLoad = true;
 
 document.addEventListener("scroll", loadShots);
 
-requestShots();
+requestShotsFirst();
+
+function requestShotsFirst() {
+	loadAllowed = false;
+	counter++;
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", `https://api.dribbble.com/v1/shots?page=${counter}&per_page=${per_page}`, true);
+	xhr.setRequestHeader("Authorization", "Bearer " + token);
+
+	if (firstLoad) {
+		xhr.onload = function (e) {
+			if (xhr.readyState === 4 && xhr.status === 200) {			
+				addShots(JSON.parse(xhr.responseText));
+				loadShots();
+				loadAllowed = true;
+			}
+		};
+		firstLoad = false;
+	} else {
+		xhr.onload = function (e) {
+			if (xhr.readyState === 4 && xhr.status === 200) {			
+				addShots(JSON.parse(xhr.responseText));
+				loadAllowed = true;
+			}
+		};
+	}
+
+	xhr.onerror = function (e) {
+		console.error(xhr.statusText);
+	};
+
+	xhr.send();
+}
 
 function requestShots() {
 	loadAllowed = false;
@@ -16,7 +49,6 @@ function requestShots() {
 	xhr.onload = function (e) {
 		if (xhr.readyState === 4 && xhr.status === 200) {			
 			addShots(JSON.parse(xhr.responseText));
-			loadShots();
 			loadAllowed = true;
 		}
 	};
@@ -29,29 +61,24 @@ function requestShots() {
 }
 
 function loadShots() {
+	if (document.getElementsByClassName("image_hidden").length < 7 && loadAllowed) {
+		requestShots();
+	}
+
 	if (document.getElementsByClassName("image_hidden").length > 0) {
 		var element = document.getElementsByClassName("image_hidden")[0];
 		var element_position = element.offsetTop;		
 		if (document.body.scrollTop + document.documentElement.scrollTop > element_position - window.innerHeight - 600) {
 			loadShot(element);
-			
+			loadShots();
 		}
-	}
-
-	if (document.getElementsByClassName("image_hidden").length < 7 && loadAllowed) {
-		requestShots();
-	}
+	}	
 }
 
 function loadShot(el) {
 	var original = el.getElementsByClassName("js-load-img")[0];
-	var img = new Image();
-	img.onload = function () {
-		original.src = original.dataset.src;
-		el.className = el.className.replace('image_hidden','image_visible');
-		loadShots();
-	}
-	img.src = original.dataset.src;
+	original.src = original.dataset.src;
+	el.className = el.className.replace('image_hidden','image_visible');
 }
 
 function addShots(shots) {
